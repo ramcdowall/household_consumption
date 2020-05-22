@@ -2,7 +2,7 @@ function [c_policy_mat, n_policy_mat, a_policy_mat, a_grid] = ...
     endogenous_grid_method_rm(transition, theta, beta, gamma, r, phi, ...
                              psi, eta, v, tao, tol)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%Endogenous grid method with elastic labor supply
+%Endogenous grid method due to Carroll (2005) w/ elastic labor supply
 % By Robert A. McDowall
 % Input:  transition (matrix): income transition matrix 
 %         theta (vector): state space for income realizations
