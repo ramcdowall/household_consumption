@@ -15,13 +15,11 @@ function [c_policy_mat, n_policy_mat, a_policy_mat, a_grid] = ...
 %                           eta - curvature of liesure utility
 %                           v - lump-sum unemployment transfers
 %                           tao - lump-sum tax faced in employment states
-%         asset_low/up: min and max bounds of asset matrices. 
 %         tol: convergence tolerance
 % Output: c_policy_mat: consumption policy function matrix
 %         n_policy_mat: labor policy function matrix
 %         a_policy_mat: asset policy function matrix 
 %         a_grid: fixed asset grid
-% Uses: labor_eqn.m in order to solve nonlinear function for consumption
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 options = optimset('Display', 'off') ;
