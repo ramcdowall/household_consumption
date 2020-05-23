@@ -4,8 +4,8 @@ function [stationary_dist] = ...
 % Stationary Distribution Calculator
 % By: Robert A. McDowall
 % Inputs: transition (matrix): income transition matrix
-%         a_policy_mat: asset policy function matrix 
-%         a_grid: fixed asset grid
+%         a_policy_mat (matrix): asset policy function matrix 
+%         a_grid (vector): fixed asset grid
 % Outputs: stationary distribution
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
