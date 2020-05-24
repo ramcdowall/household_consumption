@@ -1,5 +1,5 @@
 function [transition, theta, uncond_dist] = ...
-                tauchen_rm(rho, sigma, m, n, pi_e_u, pi_u_e, ui)
+                tauchen_rm(rho, sigma, m, n, unemp_opt, pi_e_u, pi_u_e, ui)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Discretization of AR(1) income process w/ unemployment state
 %Method due to Tauchen (1986)
@@ -7,7 +7,8 @@ function [transition, theta, uncond_dist] = ...
 % Inputs:  rho (float): AR(1) parameter rho, 
 %          sigma (float): variance of random innovation
 %          m (float): multiple of unconditional stnd dev to discretize
-%          n (int): size of discretization 
+%          n (int): size of discretization
+%          unemp_opt (int): set to 1 to include unemployment state 
 %          pi_e_u, pi_u_e (float): employment (-> / <-)unemployment 
 %                                  probabilities, respectively
 %          ui (float) = proportion of average income in unemployment state  
@@ -15,7 +16,8 @@ function [transition, theta, uncond_dist] = ...
 %          unconditional distribution
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Set up inputs
-n = n-1; %drop one state, unemployment state added below
+if unemp_opt == 1  n = n-1; end
+
 temp_mat = zeros(n); %initialize matrix to fill in with transitions
 tol = 1*10^-3; 
 
@@ -42,7 +44,7 @@ end
 
 %rescale
 theta_temp = exp(y);
-S = length(theta_temp+1);
+S = length(theta_temp);
 
 % compute invariant distribution for theta  
 pr = ones(1,S)/S; dis = 1;      
@@ -53,15 +55,22 @@ while dis>tol
 end
 
 %OUTPUTS%%%%%%%%%%%
-%add unemployment to statespace 
-theta = [ui*mean(theta_temp) theta_temp]; %OUTPUT 1
 
-%add unemployment to transition matrix, now n states
-transition_top = [(1-pi_u_e), pi_u_e*pr];
-transition_rest = [pi_e_u*ones(n,1), (1-pi_e_u)*temp_mat];
-transition = [transition_top; transition_rest]; %OUTPUT 2
- 
+if unemp_opt == 1  
+    %add unemployment to statespace 
+    theta = [ui*mean(theta_temp) theta_temp]; %OUTPUT 1
+    
+    %add unemployment to transition matrix, now n states
+    transition_top = [(1-pi_u_e), pi_u_e*pr];
+    transition_rest = [pi_e_u*ones(n,1), (1-pi_e_u)*temp_mat];
+    transition = [transition_top; transition_rest]; %OUTPUT 2
+else
+    theta = theta_temp; %OUTPUT 1    
+    transition = temp_mat; %OUTPUT 2
+end
+
 uncond_dist_temp = transition^1000; %decent approximation of limiting dist'n
 uncond_dist = uncond_dist_temp(1,:); %OUTPUT 3
 
 end
+
